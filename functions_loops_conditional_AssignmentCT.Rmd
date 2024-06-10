@@ -1,0 +1,283 @@
+
+The basic syntax for an if statement goes like this:
+
+```{r}
+#if (logical statement) {
+  #do something
+#} else {
+  #do something else
+#}
+```
+The logical statements should boil down to a boolean; for example:
+```{r}
+a <- 6
+if(a>=10){
+  print(a)
+}else{
+  print("it is not more than 10")
+}
+```
+We can also add else if statements in the middle if we need more options.
+
+```{r}
+a <- 15
+if (a < 5){
+  print('Low')
+}else if (a >=5 & a <=10)  {
+ print('medium')
+}else if (a >= 10 | a ==7){
+  print('high')
+}else{
+  print('hot')
+}
+  
+```
+
+Neat! We can also nest conditionals just like we do in Python.
+
+```{r}
+# Print numbers from 1 to 5
+for (i in 1:5) {
+  print(i)
+}
+    
+```
+
+Neat! Now, let's look at another core part of R programming - Loops!
+
+### Loops
+
+```{r}
+for (value in 1:5){
+  #paste is a concatenation function
+  print(paste(value, "is greater than", value-1))
+}
+```
+
+We can also do nifty stuff with our vectors, such as apply changes to specific indices of our data.
+
+```{r}
+1Vector <- c(1,1,1,1,1,1,1)
+#change the first , third, and sixth elements to the value 6
+for(i in c(1,3,6)){
+  1Vector[i] <- 6
+}
+Print(1Vector)
+1vector
+```
+
+We can loop over more than just lists:
+
+```{r}
+mat <- matrix(1, nrow= 2, ncol = 2)
+for(row in 1:2){
+  for(col in 1:2){
+    mat[row,col] <- 0
+    print(mat)
+  }
+}
+```
+
+
+```{r}
+#Like Python, we have while loops in R:
+b <- 6
+while(b < 10){
+  #increase b by 2
+  b <- b + 2
+  # print b
+  print(b)
+}
+```
+
+```
+
+## Functions
+
+When should we use functions?
+
+```{r}
+our_function <- function(optional_params){
+  # do some stuff
+  
+  
+}
+
+
+```
+
+An example:
+
+```{r}
+#start with vector of temperature 
+test_temp <- c(16.55678, 26.9420005,32.5910888, 8.580116, 28.003873, 28.5423, 20.976854)                                                                                                 
+#Then we want a function that converts from c to f:
+
+change_in_temp <- function(data) {
+  temp_fahr <- dat * (9/5) + 32
+ 
+  return(temp_fahr)
+}
+
+
+```
+
+print(change_in_temp(26))
+```
+
+This is all cool.. but it didn't do anything. We need to call the function!
+
+```{r}
+data_fahr <- change_in_temp(test_temp)
+data_fahr
+```
+
+Notice that in the background here, we are looping over each item in the array, but we never write a for loop! Keep this in mind, since when you pass in a large data set, the changes made by functions aren't quite immediate - the computer does have to go over each item in your data set, and change them one at a time.
+
+A shortcut of sorts is to use the `apply()` function, which operates very similarly to Python's `map()`. Note that `apply` syntax goes as follows: `apply(X, MARGIN, FUN)` where X is the data set to use, MARGIN is specification for rows or columns, and FUN is the function to apply.
+
+```{r}
+test_mat <-  matrix(c(1,1,1,2,2,2), nrow <- 2)
+test_mat
+apply(test_mat,1 , sum) # this adds the value in the vertical or row order, 1 refers to row and 2 is for colomun
+apply(test_mat,2 , sum)
+```
+
+It is common to use `mean`, `median`, `sum`, `min`, or `max` with `apply`, but we can also use our user-defined functions as well. Note that apply() only works with matrices.
+
+```{r}
+#start with vector of temperature 
+test_temp <- c(16.55678, 26.9420005,32.5910888, 8.580116, 28.003873, 28.5423, 20.976854)                                                                                                 
+#Then we want a function that converts from c to f:
+
+change_in_temp <- function(dat) {
+  temp_fahr <- dat * (9/5) + 32
+ 
+  return(temp_fahr)
+}
+
+print(change_in_temp(26))
+```
+```{r}
+test_temp_mat <- matrix(c(16.55678, 26.9420005,32.5910888, 8.580116, 28.003873, 28.5423, 20.976854, 34.7890), nrow <- 2)
+
+apply(test_temp_mat, 1, c_to_f)
+```
+
+### Homework
+
+1.  Do 5 CodeWars problems in R. Share your solutions here:
+{r}
+#one
+solution <- function(number) {
+  sum <- 0
+  
+  for (i in 1:(number - 1)) {
+    if (i %% 3 == 0 || i %% 5 == 0) {
+      sum <- sum + i
+    }
+  }
+  
+  return(sum)
+}
+#TWO
+
+digital_root <- function(n) {
+
+  if (n < 10) {
+    return(n)
+  }
+  
+  sum_digits <- sum(as.numeric(strsplit(as.character(n), "")[[1]]))
+  
+
+  return(digital_root(sum_digits))
+}
+#Three
+array_diff <- function(a, b) {
+  
+  b_set <- unique(b)
+  
+  result <- a[!(a %in% b_set)]
+  
+  return(result)
+}
+#Four 
+duplicate_count <- function(text) {
+  text <- tolower(text)
+  
+
+  char_count <- list()
+  
+  for (char in strsplit(text, "")[[1]]) {
+  
+    if (!grepl("[a-z0-9]", char)) {
+      next
+    }
+    
+
+    if (is.null(char_count[[char]])) {
+      char_count[[char]] <- 1
+    } else {
+      char_count[[char]] <- char_count[[char]] + 1
+    }
+  }
+  
+
+  duplicates_count <- sum(unlist(char_count) > 1)
+  
+  return(duplicates_count)
+}
+
+
+    ```{r}
+
+```
+
+3.  **Mario Challenge:** In the classic Super Mario games, Mario ends each level by ascending a flight of stairs and leaping off the top to arrive at the castle at the end. (See [here](https://youtu.be/-avspZlbOWU?t=55) for details). We can imagine that each of the bricks of the stairs is a character X. Create a function that prints out a set of stairs. For example:
+
+    If the function is called marioStairs() and we pass in the value 4, we would expect to see stairs with a length of 4 and a height of 4:
+
+    X
+
+    XX
+
+    XXX
+
+    XXXX
+
+
+
+
+  
+```{r}
+#You may feel more comfortable figuring this out in Python first, then translating into R later.
+  for (i in 0:3) {
+    for (j in 0:i) {
+      last("X ")
+    }
+    last("\n \n")
+  }
+
+```
+Create a function that checks an input of type int and returns fizz if the number is a multiple of 3, buzz if the number is a #multiple of 5, and fizzbuzz if the number is a multiple of 3 and 5.
+
+```{r}
+fizz_Orbuzz <- function(n) {
+    result <- c()
+    for (i in 1:n) {
+      if (i %% 3 == 0 ) {
+        result <- c(result, "Fizz")
+      } else if (i %% 3 == 0 && i %% 5 == 0) {
+        result <- c(result, "Fizzbuzz")
+      } else if (i %% 5 == 0) {
+        result <- c(result, "Buzz")
+      } else {
+        result <- c(result, as.character(i))
+      }
+    }
+    return(result)
+}
+fizz_Orbuzz(12)
+
+```
